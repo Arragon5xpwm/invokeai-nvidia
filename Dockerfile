@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11
 ARG VERSION
 ENV HUGGING_FACE_HUB_TOKEN="<your token>"
 ENV NVIDIA_VISIBLE_DEVICES=all
@@ -14,7 +14,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN python -m pip install --upgrade pip
 RUN pip install InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url https://download.pytorch.org/whl/cu117
-VOLUME $INVOKEAI_ROOT
+VOLUME /InvokeAI
 EXPOSE 9090/tcp
 CMD invokeai-configure -y --root=$INVOKEAI_ROOT && invokeai --no-nsfw_checker --web --host=0.0.0.0
 
