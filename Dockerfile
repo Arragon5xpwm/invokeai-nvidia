@@ -19,5 +19,5 @@ RUN pip install InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url https:
 #RUN invokeai-configure -y --root=$TOKEN
 VOLUME /InvokeAI
 EXPOSE 9090/tcp
-CMD ["invokeai", "--no-nsfw_checker","--web", "--host=0.0.0.0"]
+CMD invokeai-configure --yes --skip-sd-weights && invokeai-web --host ""
 
