@@ -15,7 +15,7 @@ ENV VIRTUAL_ENV=/opt/invokeai_venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN python -m pip install --upgrade pip
-RUN pip install InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url https://download.pytorch.org/whl/cu121
+RUN pip install --pre InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url https://download.pytorch.org/whl/cu121
 #RUN invokeai-configure -y --root=$TOKEN
 VOLUME /InvokeAI
 EXPOSE 9090/tcp
