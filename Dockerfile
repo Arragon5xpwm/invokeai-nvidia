@@ -19,5 +19,5 @@ RUN pip install --pre InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url 
 #RUN invokeai-configure -y --root=$TOKEN
 VOLUME /InvokeAI
 EXPOSE 9090/tcp
-CMD invokeai-configure --yes --skip-sd-weights && invokeai-web --host ""
+CMD invokeai-configure --yes --skip-sd-weights && invokeai-web
 
