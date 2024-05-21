@@ -35,4 +35,4 @@ RUN pip install --pre InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url 
 EXPOSE 9090/tcp
 
 # Set the default command to run as the non-root user
-CMD ["sudo", "-u", $USER_ID, "-g", $GROUP_ID, "invokeai-web"]
+CMD ["/usr/bin/sudo", "-u", $USER_ID, "-g", $GROUP_ID, "$VIRTUAL_ENV/bin/invokeai-web"]
