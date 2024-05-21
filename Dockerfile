@@ -15,9 +15,9 @@ RUN useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash invokeai
 # Set the INVOKEAI_ROOT directory
 ENV INVOKEAI_ROOT=/InvokeAI
 # Create the directory and switch ownership to the new user
-RUN install -d -m 775 -u $USER_ID -g $GROUP_ID $INVOKEAI_ROOT
+RUN install -d -m 775 -o $USER_ID -g $GROUP_ID $INVOKEAI_ROOT
 ENV VIRTUAL_ENV=/opt/invokeai_venv
-RUN install -d -m 775 -u $USER_ID -g $GROUP_ID $VIRTUAL_ENV
+RUN install -d -m 775 -o $USER_ID -g $GROUP_ID $VIRTUAL_ENV
 # Set the workdir and switch to the new user
 WORKDIR $INVOKEAI_ROOT
 USER invokeai
