@@ -16,13 +16,13 @@ RUN useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash invokeai
 ENV INVOKEAI_ROOT=/InvokeAI
 # Create the directory and switch ownership to the new user
 RUN mkdir -p $INVOKEAI_ROOT && chown $USER_ID:$GROUP_ID $INVOKEAI_ROOT
+ENV VIRTUAL_ENV=/opt/invokeai_venv
+RUN mkdir -p $VIRTUAL_ENV && chown $USER_ID:$GROUP_ID $INVOKEAI_ROOT
 # Set the workdir and switch to the new user
 WORKDIR $INVOKEAI_ROOT
 USER invokeai
 
 # Set up the virtual environment
-ENV VIRTUAL_ENV=/opt/invokeai_venv
-RUN mkdir -p $VIRTUAL_ENV && chown $USER_ID:$GROUP_ID $INVOKEAI_ROOT
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
