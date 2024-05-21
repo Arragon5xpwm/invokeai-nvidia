@@ -10,8 +10,8 @@ ENV GROUP_ID=100
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -o APT::Install-Suggests=0 -o APT::Install-Recommends=0 --no-install-recommends -y libgl1 libglib2.0-0 libgl1-mesa-glx libsm6 libxext6 libxrender1 python-is-python3 python3-venv build-essential python3-opencv libopencv-dev && \
-    apt-get clean && \
-    groupadd -g ${GROUP_ID} invokeai && \
+    apt-get clean
+RUN groupadd -g ${GROUP_ID} invokeai || \
     useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash invokeai
 # Set the INVOKEAI_ROOT directory
 ENV INVOKEAI_ROOT=/InvokeAI
