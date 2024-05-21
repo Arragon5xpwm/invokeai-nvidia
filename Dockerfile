@@ -9,17 +9,16 @@ ENV USER_ID=99
 ENV GROUP_ID=100
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -o APT::Install-Suggests=0 -o APT::Install-Recommends=0 --no-install-recommends -y libgl1 libglib2.0-0 libgl1-mesa-glx libsm6 libxext6 libxrender1 python-is-python3 python3-venv build-essential python3-opencv libopencv-dev && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -o APT::Install-Suggests=0 -o APT::Install-Recommends=0 --no-install-recommends -y libgl1 libglib2.0-0 libgl1-mesa-glx libsm6 libxext6 libxrender1 python-is-python3 python3-venv build-essential python3-opencv libopencv-dev sudo && \
     apt-get clean
-RUN groupadd -g ${GROUP_ID} invokeai || \
-    useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash invokeai
+RUN useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash nobody
 # Set the INVOKEAI_ROOT directory
 ENV INVOKEAI_ROOT=/InvokeAI
 # Create the directory and switch ownership to the new user
-RUN mkdir -p $INVOKEAI_ROOT && chown invokeai:invokeai $INVOKEAI_ROOT
+RUN mkdir -p $INVOKEAI_ROOT && chown nobody:invokeai $INVOKEAI_ROOT
 # Set the workdir and switch to the new user
 WORKDIR $INVOKEAI_ROOT
-USER invokeai
+USER nobody
 
 # Set up the virtual environment
 ENV VIRTUAL_ENV=/opt/invokeai_venv
@@ -35,4 +34,4 @@ RUN pip install --pre InvokeAI[xformers]$VERSION --use-pep517 --extra-index-url 
 EXPOSE 9090/tcp
 
 # Set the default command to run as the non-root user
-CMD ["su", "invokeai", "-c", "invokeai-web"]
+CMD ["sudo", "-u", $USER_ID, "-g", $GROUP_ID, "invokeai-web"]
