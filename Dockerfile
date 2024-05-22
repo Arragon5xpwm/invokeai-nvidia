@@ -36,4 +36,4 @@ VOLUME /InvokeAI
 EXPOSE 9090/tcp
 
 # Set the default command to run as the non-root user
-CMD ["$VIRTUAL_ENV/bin/invokeai-web"]
+CMD "invokeai-web"
